@@ -8,7 +8,7 @@ jobs:
   build:
     strategy:
       matrix:
-        host-os: ["ubuntu-latest", "macos-latest"]
+        host-os: ["ubuntu-latest", "macos-latest", "windows-latest"]
         python-version: ["3.7", "3.8", "3.9"]
       fail-fast: false
 
@@ -40,7 +40,13 @@ jobs:
           pip install cython numpy scipy
 
       - name: Build sdist and wheel and install *.whl
-        if: runner.os != 'Windows'
+        if: runner.os == 'Windows'
+        run: |
+          set -vxeuo pipefail
+          conda install mkl-devel
+
+      - name: Build sdist and wheel and install *.whl
+        # if: runner.os != 'Windows'
         run: |
           set -vxeuo pipefail
           make lib
