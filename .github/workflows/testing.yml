@@ -43,7 +43,14 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           set -vxeuo pipefail
-          conda install mkl-devel
+          conda install mkl-devel make -c conda-forge
+
+      - name: Build sdist and wheel and install *.whl
+        if: runner.os == 'Windows'
+        run: |
+          set -vxeuo pipefail
+          conda install mkl-devel make -c conda-forge
+          pip install primme
 
       - name: Build sdist and wheel and install *.whl
         # if: runner.os != 'Windows'
